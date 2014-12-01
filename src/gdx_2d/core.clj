@@ -1,5 +1,5 @@
 (ns gdx-2d.core
-  (:import (com.badlogic.gdx.graphics.g2d SpriteBatch BitmapFont TextureRegion)
+  (:import (com.badlogic.gdx.graphics.g2d SpriteBatch BitmapFont TextureRegion TextureAtlas)
            (com.badlogic.gdx.math Matrix4)
            (com.badlogic.gdx.graphics Camera GL20 Color Texture OrthographicCamera)
            (com.badlogic.gdx Gdx)
@@ -51,6 +51,24 @@
    Must be performed on the render thread"
   ([file]
    (Texture. (file-handle file))))
+
+(defn atlas
+  "Creates a new texture atlas from a file
+
+  Must be performed on the render thread"
+  ([file]
+   (TextureAtlas. (file-handle file))))
+
+(defprotocol ITextureRegionable
+  (texture-region [this x y w h] "Derive a new texture region for the given rectangle"))
+
+(extend-protocol ITextureRegionable
+  Texture
+  (texture-region [this x y w h]
+    (TextureRegion. this ^int x ^int y ^int w ^int h))
+  TextureRegion
+  (texture-region [this x y w h]
+    (TextureRegion. this ^int x ^int y ^int w ^int h)))
 
 (defn ortho-cam
   "Creates a new orthographic camera"

@@ -10,5 +10,6 @@
                   :classifier "natives-desktop"]]
   :profiles {:dev {:dependencies [[gdx-loopy "0.1.0-SNAPSHOT"]]
                    :source-paths ["examples"]}}
+  :global-vars {*warn-on-reflection* true}
   :repositories [["sonatype"
                   "https://oss.sonatype.org/content/repositories/releases/"]])
