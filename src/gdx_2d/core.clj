@@ -31,6 +31,9 @@
   FileHandle
   (file-handle [this]
     this)
+  java.io.File
+  (file-handle [this]
+    (FileHandle. this))
   String
   (file-handle [this]
     (FileHandle. this)))
