@@ -1,5 +1,5 @@
 (ns gdx-2d.core
-  (:import (com.badlogic.gdx.graphics.g2d SpriteBatch BitmapFont TextureRegion TextureAtlas)
+  (:import (com.badlogic.gdx.graphics.g2d SpriteBatch BitmapFont TextureRegion TextureAtlas BitmapFont$TextBounds)
            (com.badlogic.gdx.math Matrix4)
            (com.badlogic.gdx.graphics Camera GL20 Color Texture OrthographicCamera)
            (com.badlogic.gdx Gdx)
@@ -201,4 +201,16 @@
    (.drawWrapped ^BitmapFont font *batch* text x y w))
   ([text x y w]
    (draw-text-wrapped! *font* text x y w)))
+
+(defn text-bounds->tuple
+  "Transforms a BitmapFont.TextBounds instance into a tuple of width, height"
+  [^BitmapFont$TextBounds bounds]
+  [(.width bounds) (.height bounds)])
+
+(defn measure-text
+  "Measures the given text returning a tuple of [x y]"
+  ([font text]
+   (text-bounds->tuple (.getBounds ^BitmapFont font ^String text)))
+  ([text]
+   (measure-text *font* text)))
 
